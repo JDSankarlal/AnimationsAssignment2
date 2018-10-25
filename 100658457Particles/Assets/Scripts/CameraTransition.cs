@@ -8,6 +8,7 @@ public class CameraTransition : MonoBehaviour {
     public float speed = 1.0f;
     private float journeyLength;
     private bool keyPressed = false;
+    private bool lerp1,lerp2,lerp3 = false;
     public Vector3 wantPos1;
     public Vector3 wantPos2;
     public Vector3 wantPos3;
@@ -17,6 +18,7 @@ public class CameraTransition : MonoBehaviour {
     //This is a comment
 	void Start ()
     {
+        TransitionCam.gameObject.transform.position = wantPos1; 
         startTime = Time.time;
         journeyLength = Vector3.Distance(TransitionCam.gameObject.transform.position, wantPos1);
         TransitionCam.gameObject.SetActive(true);
@@ -25,8 +27,10 @@ public class CameraTransition : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        float distCovered = (Time.time - startTime) * speed;
+        float fracJourney = distCovered / journeyLength;
 
-        if(Input.GetKeyDown(KeyCode.C))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             keyPressed = true;   
         }
@@ -46,25 +50,46 @@ public class CameraTransition : MonoBehaviour {
             journeyLength = Vector3.Distance(TransitionCam.gameObject.transform.position, wantPos1);
         }
 
-        if (!(!keyPressed))
+        if (keyPressed)
         {
-            float distCovered = (Time.time - startTime) * speed;
-            float fracJourney = distCovered / journeyLength;
-
             if (TransitionCam.gameObject.transform.position == wantPos1)
             {
-                TransitionCam.gameObject.transform.position = Vector3.Lerp(TransitionCam.gameObject.transform.position, wantPos2, fracJourney);
+                lerp1 = true;
+                lerp2 = false;
+                lerp3 = false;
             }
 
-            else if (TransitionCam.gameObject.transform.position == wantPos2)
+            if (TransitionCam.gameObject.transform.position == wantPos2)
             {
-                TransitionCam.gameObject.transform.position = Vector3.Lerp(TransitionCam.gameObject.transform.position, wantPos3, fracJourney);
-            }
+                lerp2 = true;
+                lerp1 = false;
+                lerp3 = false;
 
-            else if (TransitionCam.gameObject.transform.position == wantPos3)
-            {
-                TransitionCam.gameObject.transform.position = Vector3.Lerp(TransitionCam.gameObject.transform.position, wantPos1, fracJourney);
             }
+            if (TransitionCam.gameObject.transform.position == wantPos3)
+            {
+                lerp3 = true;
+                lerp2 = false;
+                lerp1 = false;
+            }
+        } 
+
+        if(lerp1)
+        {
+            TransitionCam.gameObject.transform.position = Vector3.Lerp(TransitionCam.gameObject.transform.position, wantPos2, fracJourney);
+            keyPressed = false;
+        }
+
+        if(lerp2)
+        {
+            TransitionCam.gameObject.transform.position = Vector3.Lerp(TransitionCam.gameObject.transform.position, wantPos3, fracJourney);
+            keyPressed = false;
+        }
+        if (lerp3)
+        {
+            TransitionCam.gameObject.transform.position = Vector3.Lerp(TransitionCam.gameObject.transform.position, wantPos1, fracJourney);
+            keyPressed = false;
+        }
+
         }
 	}
-}
