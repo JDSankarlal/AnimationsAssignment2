@@ -1,4 +1,9 @@
-﻿using System.Collections;
+﻿//Author: Joshua Sankarlal
+//Date: October 25th 2018
+//Student ID: 100658457
+
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -38,6 +43,7 @@ public class CameraTransition : MonoBehaviour {
         if (TransitionCam.gameObject.transform.position == wantPos1)
         {
             journeyLength = Vector3.Distance(TransitionCam.gameObject.transform.position, wantPos2);
+          
         }
 
         if (TransitionCam.gameObject.transform.position == wantPos2)
@@ -78,18 +84,27 @@ public class CameraTransition : MonoBehaviour {
         {
             TransitionCam.gameObject.transform.position = Vector3.Lerp(TransitionCam.gameObject.transform.position, wantPos2, fracJourney);
             keyPressed = false;
+            //startTime = Time.time;
         }
 
         if(lerp2)
         {
             TransitionCam.gameObject.transform.position = Vector3.Lerp(TransitionCam.gameObject.transform.position, wantPos3, fracJourney);
             keyPressed = false;
+            //startTime = Time.time;
+
         }
         if (lerp3)
         {
             TransitionCam.gameObject.transform.position = Vector3.Lerp(TransitionCam.gameObject.transform.position, wantPos1, fracJourney);
             keyPressed = false;
-        }
+            //startTime = Time.time;
 
         }
+
+    }
 	}
+
+//Author: Joshua Sankarlal
+//Date: October 25th 2018
+//Student ID: 100658457
