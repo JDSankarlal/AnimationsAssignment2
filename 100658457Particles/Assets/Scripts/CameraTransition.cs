@@ -14,6 +14,7 @@ public class CameraTransition : MonoBehaviour {
     Vector3 wantPosition = new Vector3(-22.51f, 1.74f, -3.2f);
 
 	// Use this for initialization
+    //This is a comment
 	void Start ()
     {
         startTime = Time.time;
